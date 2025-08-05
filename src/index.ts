@@ -1,6 +1,28 @@
 import "dotenv/config";
 import { createClient, type MessageData } from "@retconned/kick-js";
 
+// Filter out unwanted console messages
+const originalLog = console.log;
+const originalWarn = console.warn;
+
+console.log = (...args: any[]) => {
+  const message = args.join(' ');
+  if (message.includes('Unknown event type: pusher:connection_established') ||
+      message.includes('Unknown event type: pusher_internal:subscription_succeeded')) {
+    return; // Skip these messages
+  }
+  originalLog.apply(console, args);
+};
+
+console.warn = (...args: any[]) => {
+  const message = args.join(' ');
+  if (message.includes('Unknown event type: pusher:connection_established') ||
+      message.includes('Unknown event type: pusher_internal:subscription_succeeded')) {
+    return; // Skip these messages
+  }
+  originalWarn.apply(console, args);
+};
+
 const BOT = process.env.KICK_USERNAME!;
 const CHANNELS = ["ms-gunfighter", "jennaronis"] as const;
 const COMMANDS: { [key: string]: string } = {
@@ -36,8 +58,10 @@ async function main() {
   const clients: Array<ReturnType<typeof createClient>> = [];
   
   for (const channelName of CHANNELS) {
-    const client = createClient(channelName, { logger: true, readOnly: false });
+    const client = createClient(channelName, { logger: false, readOnly: false });
     await login(client);
+    
+    console.log(`🔄 Connecting to ${channelName}...`);
     
     // Wait for client to be ready
     await new Promise<void>(resolve =>
