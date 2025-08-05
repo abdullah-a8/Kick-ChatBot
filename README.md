@@ -70,7 +70,7 @@ You'll need a Kick.com account that will act as your bot. For best practices:
 ### 1. Clone the Repository
 
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/abdullah-a8/Kick-ChatBot
 cd Kick-ChatBot
 ```
 
