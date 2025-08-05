@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",                    // Good balance of modern JS features + wide support
+    "module": "NodeNext",                  // Needed if using ESModules (import/export)
+    "moduleResolution": "NodeNext",        // Aligns with modern Node module resolution
+
+    "rootDir": "./src",                    // Source files location
+    "outDir": "./dist",                    // Compiled output folder
+    "esModuleInterop": true,               // Allows importing CommonJS packages
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,                        // All strict checks enabled
+    "skipLibCheck": true,                  // Speeds up builds, disables type-checking of node_modules
+    "sourceMap": true,                     // Creates `.map` files for debugging
+    "types": ["node"]                      // Required for Node.js globals like `process`, `setTimeout`, etc.
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
