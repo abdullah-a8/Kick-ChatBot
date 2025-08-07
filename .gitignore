@@ -178,3 +178,4 @@ $RECYCLE.BIN/
 
 # Linux
 *~
+.env.bck
